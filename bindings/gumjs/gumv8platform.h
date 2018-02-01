@@ -26,6 +26,8 @@ public:
   const gchar * GetRuntimeSourceMap () const;
   GumV8Bundle * GetObjCBundle ();
   const gchar * GetObjCSourceMap () const;
+  GumV8Bundle * GetSwiftBundle ();
+  const gchar * GetSwiftSourceMap () const;
   GumV8Bundle * GetJavaBundle ();
   const gchar * GetJavaSourceMap () const;
   GumV8Bundle * GetDebugBundle () const { return debug_bundle; }
@@ -61,6 +63,7 @@ private:
   v8::Isolate * isolate;
   GumV8Bundle * runtime_bundle;
   GumV8Bundle * objc_bundle;
+  GumV8Bundle * swift_bundle;
   GumV8Bundle * java_bundle;
   GumV8Bundle * debug_bundle;
   GumScriptScheduler * scheduler;

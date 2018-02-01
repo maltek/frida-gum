@@ -26,6 +26,7 @@
     "frida-compile": "^5.0.1",
     "frida-java": "1.2.9",
     "frida-objc": "2.0.5",
+    "swift-frida": "~/Desktop/src/swift-frida/",
     "promiscuous": "^0.7.0"
   },
   "repository": {

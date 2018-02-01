@@ -10,6 +10,7 @@
 #include "gumdukmacros.h"
 #include "gumdukscript-java.h"
 #include "gumdukscript-objc.h"
+#include "gumdukscript-swift.h"
 #include "gumdukscript-promise.h"
 #include "gumdukstalker.h"
 #include "gumsourcemap.h"
@@ -152,8 +153,10 @@ GUMJS_DECLARE_CONSTRUCTOR (gumjs_frida_construct)
 GUMJS_DECLARE_GETTER (gumjs_frida_get_heap_size)
 GUMJS_DECLARE_GETTER (gumjs_frida_get_source_map)
 GUMJS_DECLARE_GETTER (gumjs_frida_objc_get_source_map)
+GUMJS_DECLARE_GETTER (gumjs_frida_swift_get_source_map)
 GUMJS_DECLARE_GETTER (gumjs_frida_java_get_source_map)
 GUMJS_DECLARE_FUNCTION (gumjs_frida_objc_load)
+GUMJS_DECLARE_FUNCTION (gumjs_frida_swift_load)
 GUMJS_DECLARE_FUNCTION (gumjs_frida_java_load)
 
 GUMJS_DECLARE_CONSTRUCTOR (gumjs_script_construct)
@@ -300,6 +303,7 @@ static const GumDukPropertyEntry gumjs_frida_values[] =
   { "heapSize", gumjs_frida_get_heap_size, NULL },
   { "sourceMap", gumjs_frida_get_source_map, NULL },
   { "_objcSourceMap", gumjs_frida_objc_get_source_map, NULL },
+  { "_swiftSourceMap", gumjs_frida_swift_get_source_map, NULL },
   { "_javaSourceMap", gumjs_frida_java_get_source_map, NULL },
 
   { NULL, NULL, NULL }
@@ -308,6 +312,7 @@ static const GumDukPropertyEntry gumjs_frida_values[] =
 static const duk_function_list_entry gumjs_frida_functions[] =
 {
   { "_loadObjC", gumjs_frida_objc_load, 0 },
+  { "_loadSwift", gumjs_frida_swift_load, 0 },
   { "_loadJava", gumjs_frida_java_load, 0 },
 
   { NULL, NULL, 0 }
@@ -1394,6 +1399,14 @@ GUMJS_DEFINE_GETTER (gumjs_frida_objc_get_source_map)
   return 1;
 }
 
+GUMJS_DEFINE_GETTER (gumjs_frida_swift_get_source_map)
+{
+  duk_push_heapptr (ctx, args->core->source_map);
+  duk_push_string (ctx, gumjs_swift_source_map);
+  duk_new (ctx, 1);
+  return 1;
+}
+
 GUMJS_DEFINE_GETTER (gumjs_frida_java_get_source_map)
 {
   duk_push_heapptr (ctx, args->core->source_map);
@@ -1407,6 +1420,15 @@ GUMJS_DEFINE_FUNCTION (gumjs_frida_objc_load)
   (void) args;
 
   gum_duk_bundle_load (gumjs_objc_modules, ctx);
+
+  return 0;
+}
+
+GUMJS_DEFINE_FUNCTION (gumjs_frida_swift_load)
+{
+  (void) args;
+
+  gum_duk_bundle_load (gumjs_swift_modules, ctx);
 
   return 0;
 }

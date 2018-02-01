@@ -130,6 +130,7 @@ gumjs_runtime_sources = [
   'runtime/hexdump.js',
   'runtime/promise.js',
   'runtime/objc.js',
+  'runtime/swift.js',
   'runtime/java.js',
   'frida-debug.js',
 ]
@@ -137,9 +138,11 @@ gumjs_runtime_outputs = [
   'gumdukscript-runtime.h',
   'gumdukscript-promise.h',
   'gumdukscript-objc.h',
+  'gumdukscript-swift.h',
   'gumdukscript-java.h',
   'gumv8script-runtime.h',
   'gumv8script-objc.h',
+  'gumv8script-swift.h',
   'gumv8script-java.h',
   'gumv8script-debug.h',
 ]

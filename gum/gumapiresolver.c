@@ -42,6 +42,8 @@ gum_api_resolver_make (const gchar * type)
 #ifdef HAVE_DARWIN
   if (strcmp (type, "objc") == 0)
     return gum_objc_api_resolver_new ();
+  //if (strcmp (type, "swift") == 0)
+  //  return gum_swift_api_resolver_new ();
 #endif
 
   return NULL;

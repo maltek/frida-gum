@@ -9,6 +9,7 @@
 #include "gumv8script-debug.h"
 #include "gumv8script-java.h"
 #include "gumv8script-objc.h"
+#include "gumv8script-swift.h"
 #include "gumv8script-runtime.h"
 
 #include <gum/gumcloak.h>
@@ -418,6 +419,7 @@ public:
 
 GumV8Platform::GumV8Platform ()
   : objc_bundle (NULL),
+    swift_bundle (NULL),
     java_bundle (NULL),
     scheduler (gum_script_scheduler_new ()),
     start_time (g_get_monotonic_time ()),
@@ -488,6 +490,7 @@ GumV8Platform::Dispose (GumV8DisposeRequest * dispose_request)
     HandleScope handle_scope (isolate);
 
     g_clear_pointer (&objc_bundle, gum_v8_bundle_free);
+    g_clear_pointer (&swift_bundle, gum_v8_bundle_free);
     g_clear_pointer (&java_bundle, gum_v8_bundle_free);
 
     g_clear_pointer (&debug_bundle, gum_v8_bundle_free);
@@ -552,6 +555,20 @@ const gchar *
 GumV8Platform::GetObjCSourceMap () const
 {
   return gumjs_objc_source_map;
+}
+
+GumV8Bundle *
+GumV8Platform::GetSwiftBundle ()
+{
+  if (swift_bundle == NULL)
+    swift_bundle = gum_v8_bundle_new (isolate, gumjs_swift_modules);
+  return swift_bundle;
+}
+
+const gchar *
+GumV8Platform::GetSwiftSourceMap () const
+{
+  return gumjs_swift_source_map;
 }
 
 GumV8Bundle *
